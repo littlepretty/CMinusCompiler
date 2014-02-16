@@ -57,6 +57,12 @@
             ReferencedContainer = "container:CMinusCompiler.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/YJQ/Documents/XcodeDocuments/CMinusCompiler/CMinusCompiler/CMinusCompiler/gcd.cm"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7988856D18AFA4A300A4469B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7988856C18AFA4A300A4469B /* main.c */; };
 		7988856F18AFA4A300A4469B /* CMinusCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7988856E18AFA4A300A4469B /* CMinusCompiler.1 */; };
+		79C7DD1318B0ABC6007A7A39 /* scan.c in Sources */ = {isa = PBXBuildFile; fileRef = 79C7DD1218B0ABC6007A7A39 /* scan.c */; };
+		79C7DD1618B0E6D2007A7A39 /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 79C7DD1518B0E6D2007A7A39 /* util.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,10 @@
 		7988857518AFA4C300A4469B /* scan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scan.h; sourceTree = "<group>"; };
 		7988857618AFA4E500A4469B /* parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse.h; sourceTree = "<group>"; };
 		7988857718AFA51400A4469B /* globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globals.h; sourceTree = "<group>"; };
+		79C7DD1218B0ABC6007A7A39 /* scan.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scan.c; sourceTree = "<group>"; };
+		79C7DD1418B0E694007A7A39 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		79C7DD1518B0E6D2007A7A39 /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
+		79C7DD1718B0EA25007A7A39 /* gcd.cm */ = {isa = PBXFileReference; lastKnownFileType = text; path = gcd.cm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,13 +69,25 @@
 		7988856B18AFA4A300A4469B /* CMinusCompiler */ = {
 			isa = PBXGroup;
 			children = (
+				79C7DD1818B0EAFD007A7A39 /* SupportingFiles */,
 				7988856C18AFA4A300A4469B /* main.c */,
 				7988857718AFA51400A4469B /* globals.h */,
+				79C7DD1418B0E694007A7A39 /* util.h */,
+				79C7DD1518B0E6D2007A7A39 /* util.c */,
 				7988857518AFA4C300A4469B /* scan.h */,
+				79C7DD1218B0ABC6007A7A39 /* scan.c */,
 				7988857618AFA4E500A4469B /* parse.h */,
-				7988856E18AFA4A300A4469B /* CMinusCompiler.1 */,
 			);
 			path = CMinusCompiler;
+			sourceTree = "<group>";
+		};
+		79C7DD1818B0EAFD007A7A39 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				79C7DD1718B0EA25007A7A39 /* gcd.cm */,
+				7988856E18AFA4A300A4469B /* CMinusCompiler.1 */,
+			);
+			name = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,7 +141,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79C7DD1318B0ABC6007A7A39 /* scan.c in Sources */,
 				7988856D18AFA4A300A4469B /* main.c in Sources */,
+				79C7DD1618B0E6D2007A7A39 /* util.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +251,7 @@
 				7988857418AFA4A300A4469B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
