@@ -1,0 +1,61 @@
+program -> declaration-list
+
+declaration-list -> declaration { declaration }
+
+declaration -> var-declaration | fun-declaration
+
+var-declaration -> type-specifier ID var-declaration'
+var-declaration' -> ; | '[' NUM ']'
+
+type-specifier -> int ; void
+
+fun-declaration -> type-specifier ID '(' params ')' | compound-list
+
+params -> params-list | void
+
+params-list -> param { , param }
+
+param -> type-specifier ID | type-specifier ID '[' ']' 
+
+compound-list -> '{' local-declarations statement-list '}'
+
+local-declarations -> empty { var-declaration }
+
+statement-list -> empty { statement }
+
+statement -> expression-list | compound-stmt | selection-stmt | iteration-stmt | return-stmt
+
+expression-list -> expression ; | ;
+
+selection-stmt -> if '(' expression ')' statement | if '(' expression ')' statement else statement
+
+iteration-stmt -> while '(' expression ')' statement
+
+return-stmt -> return return-stmt'
+return-stmt' -> ; | expression
+
+expression -> var = expression | simple-expression
+
+var -> ID | ID '[' expression ']'
+
+simple-expression -> additive-expression relop additive-expression | additive-expression
+
+relop -> <= | < | > | >= | == | !=
+
+additive-expression -> term { addop additive-expression }
+
+addop -> + | -
+
+term -> factor { mulop factor }
+
+mulop -> * | /
+
+factor -> '(' expression ')' | var | call | NUM
+
+call -> ID '(' args ')'
+
+args -> arg-list | empty	// if current token is ')', choose empty
+
+arg-list -> expression { , expression }
+
+
