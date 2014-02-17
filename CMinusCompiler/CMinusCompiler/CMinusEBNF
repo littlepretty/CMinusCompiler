@@ -19,9 +19,9 @@ param -> type-specifier ID | type-specifier ID '[' ']'
 
 compound-list -> '{' local-declarations statement-list '}'
 
-local-declarations -> empty { var-declaration }
+local-declarations -> empty { var-declaration } // should choose exit if current token is '}', follow set
 
-statement-list -> empty { statement }
+statement-list -> empty { statement }   // should choose exit if current token is '}', follow set
 
 statement -> expression-list | compound-stmt | selection-stmt | iteration-stmt | return-stmt
 
@@ -54,7 +54,7 @@ factor -> '(' expression ')' | var | call | NUM
 
 call -> ID '(' args ')'
 
-args -> arg-list | empty	// if current token is ')', choose empty
+args -> arg-list | empty	// if current token is ')', choose empty (that is, to exit args)
 
 arg-list -> expression { , expression }
 
