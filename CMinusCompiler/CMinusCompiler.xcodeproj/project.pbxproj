@@ -38,6 +38,7 @@
 		79C7DD1418B0E694007A7A39 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		79C7DD1518B0E6D2007A7A39 /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
 		79C7DD1718B0EA25007A7A39 /* gcd.cm */ = {isa = PBXFileReference; lastKnownFileType = text; path = gcd.cm; sourceTree = "<group>"; };
+		79CCF39F18B47E8200DB12ED /* sort.cm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sort.cm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				79C7DD1718B0EA25007A7A39 /* gcd.cm */,
+				79CCF39F18B47E8200DB12ED /* sort.cm */,
 				79604A5818B21D450044D1F5 /* CMinusEBNF */,
 				7988856E18AFA4A300A4469B /* CMinusCompiler.1 */,
 			);
