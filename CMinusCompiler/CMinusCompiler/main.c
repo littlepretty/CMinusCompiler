@@ -7,12 +7,13 @@
 //
 
 #include <stdio.h>
+#include <string.h>
+
 
 #include "scan.h"
 #include "parse.h"
 #include "globals.h"
 
-#include <string.h>
 
 int LineNumber = 0;
 

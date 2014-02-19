@@ -9,7 +9,7 @@ var-declaration' -> ; | '[' NUM ']'
 
 type-specifier -> int ; void
 
-fun-declaration -> type-specifier ID '(' params ')' | compound-list
+fun-declaration -> type-specifier ID '(' params ')' compound-list
 
 params -> params-list | void
 

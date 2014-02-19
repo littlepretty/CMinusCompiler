@@ -11,6 +11,7 @@
 		7988856F18AFA4A300A4469B /* CMinusCompiler.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7988856E18AFA4A300A4469B /* CMinusCompiler.1 */; };
 		79C7DD1318B0ABC6007A7A39 /* scan.c in Sources */ = {isa = PBXBuildFile; fileRef = 79C7DD1218B0ABC6007A7A39 /* scan.c */; };
 		79C7DD1618B0E6D2007A7A39 /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 79C7DD1518B0E6D2007A7A39 /* util.c */; };
+		79CCF3A118B491CE00DB12ED /* parse.c in Sources */ = {isa = PBXBuildFile; fileRef = 79CCF3A018B491CE00DB12ED /* parse.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		79C7DD1518B0E6D2007A7A39 /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
 		79C7DD1718B0EA25007A7A39 /* gcd.cm */ = {isa = PBXFileReference; lastKnownFileType = text; path = gcd.cm; sourceTree = "<group>"; };
 		79CCF39F18B47E8200DB12ED /* sort.cm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sort.cm; sourceTree = "<group>"; };
+		79CCF3A018B491CE00DB12ED /* parse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parse.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				7988857518AFA4C300A4469B /* scan.h */,
 				79C7DD1218B0ABC6007A7A39 /* scan.c */,
 				7988857618AFA4E500A4469B /* parse.h */,
+				79CCF3A018B491CE00DB12ED /* parse.c */,
 			);
 			path = CMinusCompiler;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 				79C7DD1318B0ABC6007A7A39 /* scan.c in Sources */,
 				7988856D18AFA4A300A4469B /* main.c in Sources */,
 				79C7DD1618B0E6D2007A7A39 /* util.c in Sources */,
+				79CCF3A118B491CE00DB12ED /* parse.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

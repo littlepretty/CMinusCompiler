@@ -49,17 +49,33 @@ typedef enum {
 
 #define MAX_RESERVED_WORDS 6
 
+typedef enum { StmtK, ExprK, DeclK } NodeKind;
+typedef enum { IfK, WhileK, ReturnK } StmtKind;
+typedef enum { OpK, ConstK, Idk, CallK } ExprKind;
+typedef enum { VarK, FuncK } DeclKind;
 
+#define MAX_NODE_CHILDREN 3
 
-
-typedef struct TreeNode {
+typedef struct treeNode
+{
+    struct treeNode* childrens[MAX_NODE_CHILDREN];
+    struct treeNode* sibling;
     
-    struct TreeNode* childrens[3];
-    struct TreeNode* sibling;
+    int lineNumber;
     
+    NodeKind nodeKind;
     
+    union {
+        StmtKind stmtKind;
+        ExprKind exprKind;
+        DeclKind declKind;
+    } kind;
     
-    
+    union {
+        int val;
+        char *name;
+        TokenType op;
+    } attribute;
     
 } TreeNode;
 
