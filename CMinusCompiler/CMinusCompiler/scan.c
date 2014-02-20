@@ -14,10 +14,6 @@
 #include "util.h"
 
 
-#define MAX_TOKEN_LENGTH 64
-
-char tokenString[MAX_TOKEN_LENGTH];
-
 #define MAX_BUFFER_SIZE 256
 
 static int LinePosition = 0;

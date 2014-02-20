@@ -13,5 +13,8 @@
 
 TokenType getNextToken();
 
+#define MAX_TOKEN_LENGTH 64
+
+char tokenString[MAX_TOKEN_LENGTH];
 
 #endif
