@@ -63,9 +63,68 @@ static TreeNode *call();
 static TreeNode *arg_list();
 
 
+static TreeNode *arg_list()
+{
+    TreeNode *t = expression();
+    TreeNode *temp = t;
+    
+    while (token != SEMI) {
+        match(COMMA);
+        TreeNode *p = expression();
+        if (p != NULL) {
+            if (t != NULL) {
+                temp->sibling = p;
+                temp = p;
+            } else {
+                t = temp = p;
+            }
+        }
+    }
+    return t;
+}
 
+static TreeNode *call()
+{
+    TreeNode *t = newExprNode(CallK);
+    
+    match(ID);
+    match(LPAREN);
+    
+    if (token != RPAREN) {
+        t->childrens[0] = arg_list();
+    }
+    match(RPAREN);
+    
+    return t;
+}
 
-
+static TreeNode *factor()
+{
+    TreeNode *t = NULL;
+    
+    switch (token) {
+        case LPAREN:
+            match(LPAREN);
+            t = expression();
+            match(RPAREN);
+            break;
+        case NUMBER:
+            t = newExprNode(ConstK);
+            if (t != NULL) {
+                t->attribute.val = atoi(tokenString);
+                match(NUMBER);
+            }
+            break;
+        case ID:
+            
+            
+            break;
+        default:
+            break;
+    }
+    
+    return t;
+}
 
 
 

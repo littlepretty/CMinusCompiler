@@ -13,5 +13,12 @@
 
 void printToken(TokenType token, char *string);
 
+TreeNode *newStmtNode(StmtKind kind);
+TreeNode *newExprNode(ExprKind kind);
+TreeNode *newDeclNode(DeclKind kind);
+
+char *copyString(const char* src);
+
+void printSyntaxTree(TreeNode *tree);
 
 #endif
