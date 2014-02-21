@@ -1,0 +1,17 @@
+follow(type-specifier) = { ID };
+
+follow(statement-list) = { LBRACE };
+
+follow(expression) = { SEMI RPAREN RBRACKET COMMA }
+
+follow(var) = { ASSIGN };
+
+follow(additive-expression) = { LT LE GE GT EQ NEQ } 
+
+follow(term) = { PLUS MINUS }
+
+follow(factor) = { TIMES DIV }
+
+follow(args) = { RPAREN }
+
+follow(declaration) = { SEMI RBRACE }

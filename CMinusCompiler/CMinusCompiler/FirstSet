@@ -1,0 +1,52 @@
+
+first(arg-list) = first(expression) = { LPAREN ID NUMBER };
+
+first(call) = { ID };
+
+first(factor) = { LPAREN ID NUMBER };
+
+first(term) = first(factor) = { LPAREN ID NUMBER };
+
+first(additive-expression) = first(term) = { LPAREN ID NUMBER };
+
+first(simple-expression) = first(additive-expression) = { LPAREN ID NUMBER };
+
+first(var) = ID;
+
+first(expression) = first(var) + first(simple-expression) = { LPAREN ID NUMBER };
+
+first(return-stmt) = { RETURN };
+
+first(iteration-stmt) = { WHILE };
+
+first(selection-stmt) = { IF };
+
+first(compound-stmt) = { LBRACE };
+
+first(expression-stmt) = first(expression) + { SEMI } = { LPAREN ID NUMBER SEMI };
+
+first(statement) = first(expression-stmt) + first(compound-stmt) + 
+					first(selection-stmt) + first(iteration-stmt) + first(return-stmt) 
+				 = { LPAREN ID NUMBER SEMI LBRACE IF WHILE RETURN };
+
+first(statement-list) = { empty } + first(statement) 
+				 = { LPAREN ID NUMBER SEMI LBRACE IF WHILE RETURN };
+
+first(local-declarations) = { empty } + first(var-declaration) = { INT VOID };
+
+first(type-specifier) = { INT VOID };
+
+first(param) = first(type-specifier) = { INT VOID };
+
+first(param-list) = first(param) = { INT VOID };
+
+first(params) = first(param-list) + { VOID } = { INT VOID };
+
+first(fun-declaration) = first(type-specifier) = { INT VOID };
+
+first(var-declaration) = first(type-specifier) = { INT VOID };
+
+first(declaration) = first(var-declaration) + first(fun-declaration) = { INT VOID };
+
+first(declaration-list) = first(declaration) = { INT VOID };
+

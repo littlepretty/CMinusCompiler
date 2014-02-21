@@ -28,6 +28,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		79206CA018B77296008D82A2 /* FirstSet */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FirstSet; sourceTree = "<group>"; };
+		79206CA118B772A0008D82A2 /* FollowSet */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FollowSet; sourceTree = "<group>"; };
 		79604A5818B21D450044D1F5 /* CMinusEBNF */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMinusEBNF; sourceTree = "<group>"; };
 		7988856918AFA4A300A4469B /* CMinusCompiler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CMinusCompiler; sourceTree = BUILT_PRODUCTS_DIR; };
 		7988856C18AFA4A300A4469B /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -92,6 +94,8 @@
 				79C7DD1718B0EA25007A7A39 /* gcd.cm */,
 				79CCF39F18B47E8200DB12ED /* sort.cm */,
 				79604A5818B21D450044D1F5 /* CMinusEBNF */,
+				79206CA018B77296008D82A2 /* FirstSet */,
+				79206CA118B772A0008D82A2 /* FollowSet */,
 				7988856E18AFA4A300A4469B /* CMinusCompiler.1 */,
 			);
 			name = SupportingFiles;
