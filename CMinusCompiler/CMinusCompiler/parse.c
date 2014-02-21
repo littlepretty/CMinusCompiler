@@ -54,77 +54,209 @@ static TreeNode *return_stmt();
 static TreeNode *expression_stmt();
 
 static TreeNode *expression();
-static TreeNode *var();
-static TreeNode *simple_expression();
-static TreeNode *additive_expression();
-static TreeNode *term();
-static TreeNode *factor();
-static TreeNode *call();
+static TreeNode *simple_expression(TreeNode *passdown);
+static TreeNode *additive_expression(TreeNode *passdown);
+static TreeNode *term(TreeNode *passdown);
+static TreeNode *factor(TreeNode *passdown);
+
+static TreeNode *identifier_stmt();
+//static TreeNode *var(TreeNode *passdown);
+//static TreeNode *call();
+
+static TreeNode *args();
 static TreeNode *arg_list();
 
 
-static TreeNode *arg_list()
+
+
+
+
+
+
+static TreeNode *expression_stmt()
 {
-    TreeNode *t = expression();
-    TreeNode *temp = t;
+    TreeNode *tree = NULL;
+    if (token != SEMI) {
+        tree = expression();
+    }
+    match(SEMI);
+    return tree;
+}
+
+static TreeNode *expression()
+{
+    TreeNode *tree = NULL;
+    TreeNode *leftValue = NULL;
     
-    while (token != SEMI) {
-        match(COMMA);
-        TreeNode *p = expression();
-        if (p != NULL) {
-            if (t != NULL) {
-                temp->sibling = p;
-                temp = p;
-            } else {
-                t = temp = p;
+    if (token == ID) {
+        leftValue = identifier_stmt();
+        if (leftValue != NULL && token == ASSIGN) {
+            tree = newExprNode(AssignK);
+            if (tree != NULL) {
+                tree->childrens[0] = leftValue;
+                match(ASSIGN);
+                tree->childrens[1] = expression();
             }
+        } else {
+            tree = simple_expression(leftValue);
         }
     }
-    return t;
+    
+    return tree;
 }
 
-static TreeNode *call()
+static TreeNode *simple_expression(TreeNode *passdown)
 {
-    TreeNode *t = newExprNode(CallK);
+    TreeNode *tree = additive_expression(passdown);
     
-    match(ID);
-    match(LPAREN);
-    
-    if (token != RPAREN) {
-        t->childrens[0] = arg_list();
+    if (token == LT || token == LE || token == GT || token == GE
+           || token == EQ || token == NEQ) {
+        TreeNode *ptr = newExprNode(OpK);
+        if (ptr != NULL) {
+            ptr->attribute.op = token;
+            ptr->childrens[0] = tree;
+            tree = ptr;
+        }
+        match(token);
+        if (tree != NULL) {
+            tree->childrens[1] = additive_expression(NULL);
+        }
     }
-    match(RPAREN);
-    
-    return t;
+    return tree;
 }
 
-static TreeNode *factor()
+static TreeNode *additive_expression(TreeNode *passdown)
 {
-    TreeNode *t = NULL;
+    TreeNode *tree = term(passdown);
+    while (token == PLUS || token == MINUS) {
+        TreeNode *ptr = newExprNode(OpK);
+        if (ptr != NULL) {
+            ptr->attribute.op = token;
+            ptr->childrens[0] = tree;
+            tree = ptr;
+        }
+        match(token);
+        if (tree != NULL) {
+            tree->childrens[1] = term(NULL);
+        }
+    }
+    return tree;
+}
+
+static TreeNode *term(TreeNode *passdown)
+{
+    TreeNode *tree = factor(passdown);
+    while (token == MUL || token == DIV) {
+        TreeNode *ptr = newExprNode(OpK);
+        if (ptr != NULL) {
+            ptr->childrens[0] = tree;
+            ptr->attribute.op = token;
+            tree = ptr;
+        }
+        match(token);
+        if (tree != NULL) {
+            tree->childrens[1] = factor(NULL);
+        }
+    }
+    return tree;
+}
+
+static TreeNode *factor(TreeNode *passdown)
+{
+    TreeNode *tree = NULL;
     
+    if (passdown != NULL) {
+        return passdown;
+    }
     switch (token) {
         case LPAREN:
             match(LPAREN);
-            t = expression();
+            tree = expression();
             match(RPAREN);
             break;
         case NUMBER:
-            t = newExprNode(ConstK);
-            if (t != NULL) {
-                t->attribute.val = atoi(tokenString);
+            tree = newExprNode(ConstK);
+            if (tree != NULL) {
+                tree->attribute.val = atoi(tokenString);
                 match(NUMBER);
             }
             break;
         case ID:
-            
-            
+            tree = identifier_stmt();
             break;
         default:
+            syntaxError("Unexpected Token: ");
+            printToken(token, tokenString);
+            GlobalError = TRUE;
             break;
     }
     
-    return t;
+    return tree;
 }
+
+static TreeNode *identifier_stmt()
+{
+    TreeNode *tree;
+    char* identiferName = copyString(tokenString);
+    match(ID);
+    
+    if (token == LPAREN) {
+        tree = newExprNode(CallK);
+        if (tree != NULL) {
+            match(LPAREN);
+            tree->childrens[0] = arg_list();
+            match(RPAREN);
+            tree->attribute.name = identiferName;
+        }
+        
+    } else {
+        tree = newExprNode(IdK);
+        if (tree != NULL) {
+            if (token == LBRACKET) {
+                match(LBRACKET);
+                tree->childrens[0] = expression();
+                match(RBRACKET);
+            }
+            tree->attribute.name = identiferName;
+        }
+    }
+    
+    return tree;
+}
+static TreeNode *args()
+{
+    TreeNode *tree = NULL;
+    /**
+     *	follows(args) = { ')' }
+     */
+    if (token != RPAREN) {
+        tree = arg_list();
+    }
+    return tree;
+}
+static TreeNode *arg_list()
+{
+    TreeNode *tree = expression();
+    TreeNode *iter = tree;
+    
+    while (token != SEMI) {
+        match(COMMA);
+        TreeNode *ptr = expression();
+        if (ptr != NULL) {
+            if (tree != NULL) {
+                iter->sibling = ptr;
+                iter = ptr;
+            } else {
+                tree = iter = ptr;
+            }
+        }
+    }
+    return tree;
+}
+
+
+
+
 
 
 

@@ -50,7 +50,9 @@ term -> factor { mulop factor }
 
 mulop -> * | /
 
-factor -> '(' expression ')' | var | call | NUM
+factor -> '(' expression ')' | identifier_stmt | NUM
+
+identifier_stmt -> var | call
 
 call -> ID '(' args ')'
 

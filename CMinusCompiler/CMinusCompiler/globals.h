@@ -40,8 +40,9 @@ typedef enum {
     
     IF, ELSE, INT, RETURN, VOID, WHILE,
     
-    PLUS, MINUS, MUL, DIV, ASSIGN, LT, LE, GT, GE, EQ, NEQ, SEMI, COMMA, LPAREN, RPAREN,
-    LBRACKET, RBRACKET, LBRACE, RBRACE,
+    PLUS, MINUS, MUL, DIV, ASSIGN, LT, LE, GT, GE, EQ, NEQ, SEMI, COMMA,
+    
+    LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE,
     
     ID, NUMBER
     
@@ -51,8 +52,8 @@ typedef enum {
 
 typedef enum { StmtK, ExprK, DeclK } NodeKind;
 typedef enum { IfK, WhileK, ReturnK } StmtKind;
-typedef enum { OpK, ConstK, Idk, CallK } ExprKind;
-typedef enum { VarK, FuncK } DeclKind;
+typedef enum { OpK, ConstK, CallK, IdK, AssignK } ExprKind;
+typedef enum { VarDeclK, FunDeclK } DeclKind;
 
 #define MAX_NODE_CHILDREN 3
 
