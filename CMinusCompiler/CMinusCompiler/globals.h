@@ -51,7 +51,7 @@ typedef enum {
 #define MAX_RESERVED_WORDS 6
 
 typedef enum { StmtK, ExprK, DeclK } NodeKind;
-typedef enum { IfK, WhileK, ReturnK } StmtKind;
+typedef enum { IfK, WhileK, ReturnK, CompK } StmtKind;
 typedef enum { OpK, ConstK, CallK, IdK, AssignK } ExprKind;
 typedef enum { VarDeclK, FunDeclK } DeclKind;
 

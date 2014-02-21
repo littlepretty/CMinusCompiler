@@ -25,6 +25,13 @@ static void syntaxError(char *message)
     GlobalError = TRUE;
 }
 
+void reportSuntaxError(void)
+{
+    syntaxError("Unexpected Token: ");
+    printToken(token, tokenString);
+    GlobalError = TRUE;
+}
+
 static void match(TokenType expected)
 {
     if (token == expected) {
@@ -36,10 +43,14 @@ static void match(TokenType expected)
     }
 }
 
+/**
+ *	forward declaration for recursive call
+ */
 static TreeNode *declaration_list();
 static TreeNode *declaration();
 static TreeNode *var_declaration();
 static TreeNode *fun_declaration();
+static TreeNode *params();
 static TreeNode *param_list();
 static TreeNode *param();
 
@@ -58,20 +69,262 @@ static TreeNode *simple_expression(TreeNode *passdown);
 static TreeNode *additive_expression(TreeNode *passdown);
 static TreeNode *term(TreeNode *passdown);
 static TreeNode *factor(TreeNode *passdown);
-
 static TreeNode *identifier_stmt();
-//static TreeNode *var(TreeNode *passdown);
-//static TreeNode *call();
 
 static TreeNode *args();
 static TreeNode *arg_list();
 
 
+TreeNode *parse()
+{
+    token = getNextToken();
+    TreeNode *tree = declaration_list();
+    if (token != END_FILE) {
+        syntaxError("Unexpected Symbol at End of File");
+    }
+    return tree;
+}
 
 
+static TreeNode *declaration_list()
+{
+    TreeNode *tree = declaration();
+    TreeNode *temp = tree;
+    
+    while (token != SEMI && token != RBRACE ) {
+        TreeNode *ptr = declaration();
+        temp->sibling = ptr;
+        temp = ptr;
+    }
+    
+    return tree;
+    
+}
+static TreeNode *declaration()
+{
+    TreeNode *tree = NULL;
+    
+    //TODO: declaration implementation
+    
+    
+    return tree;
+}
+static TreeNode *var_declaration()
+{
+    TreeNode *tree = newDeclNode(VarDeclK);
+
+    if (token == INT || token == VOID) {
+        match(token);
+    }
+    
+    tree->attribute.name = copyString(tokenString);
+    match(ID);
+    
+    if (token == SEMI) {
+        match(SEMI);
+    } else {
+        match(LBRACKET);
+        TreeNode *num = newExprNode(ConstK);
+        num->attribute.val = atoi(tokenString);
+        tree->childrens[0] = num;
+        match(NUMBER);
+        match(RBRACKET);
+    }
+    
+    return tree;
+}
+static TreeNode *fun_declaration()
+{
+    TreeNode *tree = newDeclNode(FunDeclK);
+    
+    if (token == INT || token == VOID) {
+        match(token);
+    }
+    
+    if (tree != NULL) {
+        TreeNode *name = newExprNode(IdK);
+        name->attribute.name = copyString(tokenString);
+        tree->childrens[0] = name;
+        match(ID);
+        
+        match(LPAREN);
+        tree->childrens[1] = params();
+        match(RPAREN);
+        
+        tree->childrens[2] = compound_stmt();
+    }
+    
+    return tree;
+}
+
+static TreeNode *params()
+{
+    TreeNode *tree = NULL;
+    
+    if (token != VOID) {
+        tree = param_list();
+    }
+    
+    return tree;
+}
+
+static TreeNode *param_list()
+{
+    TreeNode *tree = param();
+    TreeNode *temp = tree;
+    
+    while (tree !=NULL && token == COMMA) {
+        match(COMMA);
+        TreeNode *ptr = param();
+        temp->sibling = ptr;
+        temp = ptr;
+    }
+    
+    return tree;
+}
+static TreeNode *param()
+{
+    TreeNode *tree = newExprNode(IdK);
+    
+    if (token == INT || token == VOID) {
+        match(token);
+    }
+    tree->attribute.name = copyString(tokenString);
+    match(ID);
+    if (token == LBRACKET) {
+        match(LBRACKET);
+        match(RBRACKET);
+    }
+    return tree;
+}
+
+static TreeNode *compound_stmt()
+{
+    TreeNode *tree = newStmtNode(CompK);
+    
+    match(LBRACE);
+    tree->childrens[0] = local_var_declaration();
+    tree->childrens[1] = stmt_list();
+    match(RBRACE);
+    
+    return tree;
+}
+static TreeNode *local_var_declaration()
+{
+    TreeNode *tree = NULL;
+    if (token == INT || token == VOID) {
+        tree = var_declaration();
+    }
+
+    if (tree != NULL) {
+        
+        TreeNode *temp = tree;
+        
+        while (token == INT || token == VOID) {
+            TreeNode *ptr = var_declaration();
+            temp->sibling = ptr;
+            temp = ptr;
+        }
+    }
+    return tree;
+}
+
+static TreeNode *stmt_list()
+{
+    TreeNode *tree = NULL;
+    if (token != RBRACE) {
+        tree = stmt();
+        TreeNode *temp = tree;
+        
+        while (token != RBRACE) {
+            TreeNode *ptr = stmt();
+            temp->sibling = ptr;
+            temp = ptr;
+        }
+    }
+    
+    return tree;
+}
 
 
+static TreeNode *stmt()
+{
+    TreeNode *tree = NULL;
+    
+    switch (token) {
+        case IF:
+            tree = selection_stmt();
+            break;
+        case WHILE:
+            tree = iteration_stmt();
+            break;
+        case RETURN:
+            tree = return_stmt();
+            break;
+        case LBRACE:
+            tree = compound_stmt();
+            break;
+        case ID:
+        case SEMI:
+        case LPAREN:
+        case NUMBER:
+            tree = expression_stmt();
+            break;
+        default:
+            reportSuntaxError();
+            break;
+    }
+    
+    return tree;
+}
 
+static TreeNode *selection_stmt()
+{
+    match(IF);
+    match(LPAREN);
+    TreeNode *tree = newStmtNode(IfK);
+    if (tree != NULL) {
+        tree->childrens[0] = expression();
+    }
+    match(RPAREN);
+    if (tree != NULL) {
+        tree->childrens[1] = stmt();
+    }
+    if (token == ELSE) {
+        match(ELSE);
+        tree->childrens[2] = stmt();
+    }
+    return tree;
+}
+
+static TreeNode *iteration_stmt()
+{
+    TreeNode *tree = newStmtNode(WhileK);
+    match(WHILE);
+    match(LPAREN);
+    if (tree != NULL) {
+        tree->childrens[0] = expression();
+    }
+    match(RPAREN);
+    if (tree != NULL) {
+        tree->childrens[1] = stmt();
+    }
+    
+    return tree;
+}
+
+static TreeNode *return_stmt()
+{
+    match(RETURN);
+    TreeNode *tree = newStmtNode(ReturnK);
+    if (tree != NULL) {
+        if (token != SEMI) {
+            tree->childrens[0] = expression();
+        }
+    }
+    match(SEMI);
+    return tree;
+}
 
 static TreeNode *expression_stmt()
 {
@@ -161,6 +414,8 @@ static TreeNode *term(TreeNode *passdown)
     return tree;
 }
 
+
+
 static TreeNode *factor(TreeNode *passdown)
 {
     TreeNode *tree = NULL;
@@ -185,9 +440,7 @@ static TreeNode *factor(TreeNode *passdown)
             tree = identifier_stmt();
             break;
         default:
-            syntaxError("Unexpected Token: ");
-            printToken(token, tokenString);
-            GlobalError = TRUE;
+            reportSuntaxError();
             break;
     }
     
