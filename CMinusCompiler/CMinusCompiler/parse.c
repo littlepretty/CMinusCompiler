@@ -113,11 +113,11 @@ static TreeNode *declaration()
     
     if (token == SEMI) {
         match(SEMI);
-        tree = newDeclNode(VarDeclK);
+        tree = newDeclNode(ScalarDeclK);
         tree->attribute.name = copyString(name);
     } else if (token == LBRACKET) {
         match(LBRACKET);
-        tree = newDeclNode(VarDeclK);
+        tree = newDeclNode(ArrayDeclK);
         tree->attribute.name = copyString(name);
         TreeNode *num = newExprNode(ConstK);
         num->attribute.val = atoi(tokenString);
@@ -137,19 +137,22 @@ static TreeNode *declaration()
 }
 static TreeNode *var_declaration()
 {
-    TreeNode *tree = newDeclNode(VarDeclK);
+    TreeNode *tree = NULL;
 
     if (token == INT || token == VOID) {
         match(token);
     }
     
-    tree->attribute.name = copyString(tokenString);
+    char* name = copyString(tokenString);
     match(ID);
     
     if (token == SEMI) {
         match(SEMI);
+        tree = newDeclNode(ScalarDeclK);
+        tree->attribute.name = name;
     } else {
         match(LBRACKET);
+        tree = newDeclNode(ArrayDeclK);
         TreeNode *num = newExprNode(ConstK);
         num->attribute.val = atoi(tokenString);
         tree->childrens[0] = num;
@@ -483,7 +486,7 @@ static TreeNode *identifier_stmt()
         tree = newExprNode(CallK);
         if (tree != NULL) {
             match(LPAREN);
-            tree->childrens[0] = arg_list();
+            tree->childrens[0] = args();
             match(RPAREN);
             tree->attribute.name = identiferName;
         }
