@@ -105,7 +105,33 @@ static TreeNode *declaration()
     TreeNode *tree = NULL;
     
     //TODO: declaration implementation
+    if (token == VOID || token == INT) {
+        match(token);
+    }
+    char *name = copyString(tokenString);
+    match(ID);
     
+    if (token == SEMI) {
+        match(SEMI);
+        tree = newDeclNode(VarDeclK);
+        tree->attribute.name = copyString(name);
+    } else if (token == LBRACKET) {
+        match(LBRACKET);
+        tree = newDeclNode(VarDeclK);
+        tree->attribute.name = copyString(name);
+        TreeNode *num = newExprNode(ConstK);
+        num->attribute.val = atoi(tokenString);
+        tree->childrens[0] = num;
+        match(NUMBER);
+        match(RBRACKET);
+    } else if (token == LPAREN) {
+        match(LPAREN);
+        tree = newDeclNode(FunDeclK);
+        tree->attribute.name = copyString(name);
+        tree->childrens[0] = params();
+        match(RPAREN);
+        tree->childrens[1] = compound_stmt();
+    }
     
     return tree;
 }

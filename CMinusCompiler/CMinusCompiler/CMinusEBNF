@@ -3,6 +3,7 @@ program -> declaration-list
 declaration-list -> declaration { declaration }
 
 declaration -> var-declaration | fun-declaration
+declaration -> type-specifier ID ';' | type-specifier ID '[' NUM ']' | type-specifier ID '(' params ')' compound-stmt
 
 var-declaration -> type-specifier ID var-declaration'
 var-declaration' -> ; | '[' NUM ']'
