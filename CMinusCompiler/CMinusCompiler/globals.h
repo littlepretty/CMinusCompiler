@@ -53,7 +53,7 @@ typedef enum {
 typedef enum { StmtK, ExprK, DeclK } NodeKind;
 typedef enum { IfK, WhileK, ReturnK, CompK } StmtKind;
 typedef enum { OpK, ConstK, CallK, IdK, AssignK } ExprKind;
-typedef enum { VarDeclK, FunDeclK } DeclKind;
+typedef enum { ScalarDeclK, ArrayDeclK, FunDeclK } DeclKind;
 
 #define MAX_NODE_CHILDREN 3
 

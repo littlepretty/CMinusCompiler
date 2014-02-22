@@ -7,10 +7,10 @@
 //
 
 #include <stdio.h>
+#include <string.h>
+
 #include "util.h"
-
 #include "globals.h"
-
 
 void printToken(TokenType token, char *string)
 {
@@ -95,6 +95,37 @@ void printToken(TokenType token, char *string)
 }
 
 
+TreeNode *newStmtNode(StmtKind kind)
+{
+    
+}
+TreeNode *newExprNode(ExprKind kind)
+{
+    
+}
+TreeNode *newDeclNode(DeclKind kind)
+{
+    
+}
+
+char *copyString(const char* src)
+{
+    size_t len = strlen(src);
+    
+    char *dst = (char *)malloc(len * sizeof(char));
+    if (dst != NULL) {
+        strcpy(dst, src);
+    } else {
+        fprintf(Listing, "Cannot Allocate Memory When Copying String");
+        exit(1);
+    }
+    return dst;
+}
+
+void printSyntaxTree(TreeNode *tree)
+{
+    
+}
 
 
 
