@@ -55,6 +55,8 @@ typedef enum { IfK, WhileK, ReturnK, CompK } StmtKind;
 typedef enum { OpK, ConstK, CallK, IdK, AssignK } ExprKind;
 typedef enum { ScalarDeclK, ArrayDeclK, FunDeclK } DeclKind;
 
+typedef enum { Void, Integer, Boolean, Array, Function } ExprType;
+
 #define MAX_NODE_CHILDREN 3
 
 typedef struct treeNode
@@ -77,6 +79,11 @@ typedef struct treeNode
         char *name;
         TokenType op;
     } attribute;
+    
+    int arrayDim;
+    
+    ExprType varDataType;
+    ExprType funcReturnType;
     
 } TreeNode;
 

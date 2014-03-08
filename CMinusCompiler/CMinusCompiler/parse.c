@@ -153,9 +153,7 @@ static TreeNode *var_declaration()
     } else {
         match(LBRACKET);
         tree = newDeclNode(ArrayDeclK);
-        TreeNode *num = newExprNode(ConstK);
-        num->attribute.val = atoi(tokenString);
-        tree->childrens[0] = num;
+        tree->arrayDim = atoi(tokenString);
         match(NUMBER);
         match(RBRACKET);
     }
